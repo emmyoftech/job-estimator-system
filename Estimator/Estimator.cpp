@@ -59,7 +59,7 @@ static double GetWallsArea(int wallHeight) {
 
     cout << " \n";
 
-    double lenghtOfWall_1{};
+    double lenghtOfWall_1;
 
     cout << "Enter length of wall 1 \n";
 
@@ -67,7 +67,7 @@ static double GetWallsArea(int wallHeight) {
 
     if (lenghtCheck(lenghtOfWall_1) == -1) return -1;
 
-    double lenghtOfWall_2{};
+    double lenghtOfWall_2;
 
     cout << "Enter length of wall 2 \n";
 
@@ -75,7 +75,7 @@ static double GetWallsArea(int wallHeight) {
 
     if (lenghtCheck(lenghtOfWall_2) == -1) return -1;
 
-    double lenghtOfWall_3{};
+    double lenghtOfWall_3;
 
     cout << "Enter length of wall 3 \n";
 
@@ -198,6 +198,11 @@ static int Estimator() {
     }
 
     double wallsArea = GetWallsArea(roomHeight);
+
+    if (wallsArea == -1) {
+        cout << "An improper length amount was entered\n";
+        return 0;
+    }
 
     double panitPrice = GetPaintPrice();
 
