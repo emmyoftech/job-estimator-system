@@ -52,12 +52,12 @@ static double GetWallsArea(int wallHeight) {
 
     cout << "\n";
     cout << "++++++++++++++++++++++++++++++++++++++++++++++++++";
-    cout << "\n";
+    cout << " \n";
 
 
-    cout << "Enter length of four walls (min: 1, max: 25) in meters\n";
+    cout << "Length of four walls (min: 1, max: 25) in meters\n";
 
-    cout << "";
+    cout << " \n";
 
     double lenghtOfWall_1{};
 
@@ -174,21 +174,21 @@ static int Estimator() {
     cout << "++++++++++++++++++++++++++++++++++++++++++++++++++";
     cout << "\n";
 
-    cout << "What is your name? \n";
+    cout << "Enter name: \n";
 
     string name;
 
     cin >> name;
 
-    cout << "Enter estimate date \n";
+    cout << "Enter estimate date: \n";
 
     string date;
 
     cin >> date;
 
-    double roomHeight;
+    int roomHeight;
 
-    cout << "Enter height of the room (min: 2, max: 6) meters: ";
+    cout << "Enter height of the room (min: 2, max: 6) meters: \n";
 
     cin >> roomHeight;
 
@@ -228,16 +228,18 @@ static int Estimator() {
 }
 
 static int Help() {
-    cout << "Just fill in all the requird fields and you will get you estimate" << endl;
+    cout << "Just fill in all the requird fields and you will get your estimate" << endl;
     cout << "\n";
 
-    cout << "Enter 0 to go back";
+    cout << "Enter 0 to go to estimator\n";
 
     int bck;
 
     cin >> bck;
 
     system("cls");
+
+    Estimator();
 
     return 0;
 }
@@ -248,9 +250,9 @@ static int initApp()
     cout << "\n";
     cout << "MENU \n";
     cout << "\n";
-    cout << "(1) >> Estmator\n";
+    cout << "(1) >> Help\n";
     cout << "\n";
-    cout << "(2) >> Help\n";
+    cout << "(2) >> Job Estmator\n";
     cout << "\n";
     cout << "(3) >> Exit\n";
     cout << "\n";
@@ -261,10 +263,12 @@ static int initApp()
     cin >> stage;
 
     if (stage == 1) {
-        Estimator();
+        Help();
+
     }
     else if (stage == 2) {
-        Help();
+        Estimator();
+
     }
     else if (stage == 3) {
         system("exit");
