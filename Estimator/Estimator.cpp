@@ -19,6 +19,15 @@ class Paint {
         }
 };
 
+/*
+* Prototype for error handler 
+*/
+int throwError(string msg);
+
+/*
+* Prototype for app initialization
+*/
+int initApp();
 
 /*
 * A function to get the area of any given wall
@@ -28,21 +37,15 @@ static double GetArea(double length, double height) {
     return length * height;
 }
 
-
 /*
 * A function that validates the lengths passed to it
 *
  */
-static int lenghtCheck(double len) {
+static void lenghtCheck(double len) {
     if (len < 1 || len > 25) {
-        cout << "Length of wall cannot be less than 1 or greater than 25\n";
-
-        return -1;
+        throwError("Length of wall cannot be less than 1 or greater than 25");
     }
-
-    return 0;
 }
-
 
 /*
 * A function to get the area of all four walls
@@ -65,7 +68,7 @@ static double GetWallsArea(int wallHeight) {
 
     cin >> lenghtOfWall_1;
 
-    if (lenghtCheck(lenghtOfWall_1) == -1) return -1;
+    lenghtCheck(lenghtOfWall_1);
 
     double lenghtOfWall_2;
 
@@ -73,7 +76,7 @@ static double GetWallsArea(int wallHeight) {
 
     cin >> lenghtOfWall_2;
 
-    if (lenghtCheck(lenghtOfWall_2) == -1) return -1;
+    lenghtCheck(lenghtOfWall_2);
 
     double lenghtOfWall_3;
 
@@ -81,7 +84,7 @@ static double GetWallsArea(int wallHeight) {
 
     cin >> lenghtOfWall_3;
 
-    if (lenghtCheck(lenghtOfWall_3) == -1) return -1;
+    lenghtCheck(lenghtOfWall_3);
 
     double lenghtOfWall_4;
 
@@ -89,11 +92,10 @@ static double GetWallsArea(int wallHeight) {
 
     cin >> lenghtOfWall_4;
 
-    if (lenghtCheck(lenghtOfWall_4) == -1) return -1;
+    lenghtCheck(lenghtOfWall_4);
 
     return GetArea(lenghtOfWall_1, wallHeight) + GetArea(lenghtOfWall_2, wallHeight) + GetArea(lenghtOfWall_3, wallHeight) + GetArea(lenghtOfWall_4, wallHeight);
 }
-
 
 /*
 * A function to get user selected paint price
@@ -124,9 +126,10 @@ static double GetPaintPrice() {
 
     cin >> selectedPaint;
 
+    if (selectedPaint < 1 || selectedPaint > 3) return throwError("Wrong input: only numbers between (1) and (3) are allowed");
+
    return paints[selectedPaint - 1].paint_price;
 }
-
 
 /*
 * A function to get the cost of the total tins entered
@@ -156,7 +159,7 @@ static double GetUnderCoatCost(string name) {
         cin >> numOfTins;
 
         if (numOfTins < 1) {
-            cout << "Number of tins cannot be less than 1 ";
+            cout << "Error:: Number of tins cannot be less than 1 ";
 
             coatCost =  GetUnderCoatCost(name);
         }
@@ -168,6 +171,31 @@ static double GetUnderCoatCost(string name) {
     return coatCost;
 }
 
+/*
+* A error handler to prompt a message and restart process
+*/
+static int throwError(string msg) {
+    system("cls"); // To clear terminal
+
+    cout << "Error: " << msg << endl;
+    cout << "\n" << endl;
+
+    string value;
+
+    cout << "Enter any key to restart app \n";
+
+    cin >> value;
+
+    system("cls"); // To clear terminal
+
+    initApp();
+
+    return 0;
+}
+
+/*
+* A function to initiate job Estmator process
+*/
 static int Estimator() {
 
     cout << "\n";
@@ -186,23 +214,20 @@ static int Estimator() {
 
     cin >> date;
 
+    size_t found = date.find("-");
+
+    if (found == string::npos) return throwError("Enter a correct date pattern using \'-\' as your seperator \n");
+
     int roomHeight;
 
     cout << "Enter height of the room (min: 2, max: 6) meters: \n";
 
     cin >> roomHeight;
 
-    if (roomHeight < 2 || roomHeight > 6) {
-        cout << "Room height cannot be less than 2 or greater than 5";
-        return 0;
-    }
+    if (roomHeight < 2 || roomHeight > 6) return throwError("Room height cannot be less than 2 or greater than 6");
 
     double wallsArea = GetWallsArea(roomHeight);
 
-    if (wallsArea == -1) {
-        cout << "An improper length amount was entered\n";
-        return 0;
-    }
 
     double panitPrice = GetPaintPrice();
 
@@ -232,19 +257,22 @@ static int Estimator() {
     return 0;
 }
 
+/*
+* A function to initiate help section
+*/
 static int Help() {
-    cout << "Just fill in all the requird fields and you will get your estimate" << endl;
+    cout << "Just fill in all the requird fields and you will get your estimate or visit: www.designsolutions.com" << endl;
     cout << "\n";
 
-    cout << "Enter 0 to go to estimator\n";
+    cout << "Enter any key to go back \n";
 
-    int bck;
+    string bck;
 
     cin >> bck;
 
-    system("cls");
+    system("cls"); // Clear the terminal
 
-    Estimator();
+    initApp();
 
     return 0;
 }
@@ -279,8 +307,9 @@ static int initApp()
         system("exit");
     }
     else {
-        cout << "Please enter provided values\n";
-        initApp();
+        cout << "No menu option is associated with \"" << stage << "\" \n";
+
+        system("exit");
     }
 
     return 0;
